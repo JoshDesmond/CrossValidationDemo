@@ -11,11 +11,14 @@ public class Regression {
 	public static void main(final String[] args) {
 		// Gather input data and convert to matrices. Using only example points
 		// for now.
-		final SimpleMatrix X = convertPointsToXMatrix(getExamplePoints());
+		final SimpleMatrix X = convertPointsToXMatrixPoly(getExamplePoints());
 		final SimpleMatrix Y = convertPointsToYMatrix(getExamplePoints());
 
+		System.out.println("X:" + X.toString());
+		System.out.println("Y:" + Y.toString());
+
 		// Find the matrix A that solves the linear system:
-		final SimpleMatrix A = findMatrixA(X, Y);
+		final SimpleMatrix A = findMatrixAtest(X, Y);
 		System.out.println(A);
 		System.out.println(prettyPrintAnswer(A));
 
@@ -33,6 +36,21 @@ public class Regression {
 			final SimpleMatrix y) {
 		// A is given by (X^T * X)^-1 * (X^T * Y) where X^T is X transpose.
 		SimpleMatrix A = new SimpleMatrix(2, 1);
+
+		// y.mult(x.transpose());
+
+		x.transpose().mult(x).invert();
+
+		A = (((x.transpose()).mult(x)).invert()).mult(x.transpose().mult(y));
+
+		return A;
+
+	}
+
+	private static SimpleMatrix findMatrixAtest(final SimpleMatrix x,
+			final SimpleMatrix y) {
+		// A is given by (X^T * X)^-1 * (X^T * Y) where X^T is X transpose.
+		SimpleMatrix A = new SimpleMatrix(3, 1);
 
 		// y.mult(x.transpose());
 
@@ -62,6 +80,24 @@ public class Regression {
 	}
 
 	/**
+	 * Converts a list of points to a vector of x inputs. Return value includes
+	 * a column of 1's
+	 */
+	public static SimpleMatrix convertPointsToXMatrixPoly(
+			final List<Point> trainingData) {
+		final SimpleMatrix X = new SimpleMatrix(trainingData.size(), 3);
+		int n = 0; // n is used to keep track of for loop
+		for (final Point point : trainingData) {
+			X.set(n, 1, point.getX());
+			X.set(n, 0, 1);
+			X.set(n, 2, Math.pow(point.getX(),2));
+			n++;
+		}
+
+		return X;
+	}
+
+	/**
 	 * Converts list of points to column matrix using just the Y's.
 	 */
 	public static SimpleMatrix convertPointsToYMatrix(
@@ -81,9 +117,9 @@ public class Regression {
 	 */
 	public static List<Point> getExamplePoints() {
 		final LinkedList<Point> points = new LinkedList<Point>();
-		points.add(new Point(1, 1));
-		points.add(new Point(2, 2));
-		points.add(new Point(5, 5));
+		points.add(new Point(1, 5));
+		points.add(new Point(2, 11));
+		points.add(new Point(4, 0));
 
 		return points;
 	}

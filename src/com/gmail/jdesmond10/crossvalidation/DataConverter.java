@@ -8,16 +8,19 @@ import com.csvreader.CsvReader;
  * For use with Cross Validation only. Converts .CSV files to EJML matrices and
  * vice versa.
  * 
- * @author Josh Desmond
  *
  */
 public class DataConverter {
 
 	public DataConverter() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void read(final String csvFile) {
+
+		// TODO readCsvFile
+
+		// I think this can all be done with EJML, I don't even know if I need
+		// the javacsv library.
 
 		CsvReader r = null;
 		try {
@@ -38,6 +41,11 @@ public class DataConverter {
 	 *            create a file called "text.txt"
 	 */
 	public void writeData(final String fileName) {
+		// TODO writeData
+	}
 
+	public LinearData getData() {
+		// TODO getData
+		return null;
 	}
 }
