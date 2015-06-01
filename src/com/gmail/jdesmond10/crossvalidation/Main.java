@@ -42,6 +42,8 @@ public class Main {
 		linData = dataC.getData(); // Read data back into Main
 		chooseAlgorithm(); // Determine what algorithm to use
 
+		System.out.println(linData.toString());
+
 		linData.shuffle(); // Shuffles data
 
 		seperateTestData();

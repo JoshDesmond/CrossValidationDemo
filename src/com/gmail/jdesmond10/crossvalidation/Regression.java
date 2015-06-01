@@ -6,6 +6,11 @@ import java.util.List;
 
 import org.ejml.simple.SimpleMatrix;
 
+/**
+ * This class is just being used for reference. It's not going to be included in
+ * the final program.
+ *
+ */
 public class Regression {
 
 	public static void main(final String[] args) {
@@ -90,7 +95,7 @@ public class Regression {
 		for (final Point point : trainingData) {
 			X.set(n, 1, point.getX());
 			X.set(n, 0, 1);
-			X.set(n, 2, Math.pow(point.getX(),2));
+			X.set(n, 2, Math.pow(point.getX(), 2));
 			n++;
 		}
 
