@@ -86,12 +86,13 @@ public class Main {
 		SimpleMatrix dataM = linData.convertToSingleMatrix();
 
 		final int n = dataM.numRows() / 5;
-		System.out.println("n = " +n);
+		System.out.println("n = " + n);
 
 		testLinData = new LinearData(dataM.extractMatrix(0, n, 0,
 				dataM.numCols())); // Save to test data
-		dataM = dataM.extractMatrix(n, dataM.numRows() - 1, 0,
-				dataM.numCols()); // Save to dataM
+		dataM = dataM.extractMatrix(n, dataM.numRows() - 1, 0, dataM.numCols()); // Save
+		// to
+		// dataM
 
 		linData = new LinearData(dataM); // Convert Matrix to field
 	}
@@ -109,8 +110,10 @@ public class Main {
 	 */
 	private String chooseData() {
 		// For now, dataC will just be set to use the given test data.
+
+
 		final ClassLoader l = ClassLoader.getSystemClassLoader();
-		final String test = l.getResource("dat/testwrite.csv").getPath();
+		final String test = l.getResource("dat/PolynomialData.csv").getPath();
 		return test;
 	}
 
@@ -121,13 +124,16 @@ public class Main {
 		System.out.println(String.format("Running CrossValidation version %s",
 				VERSION));
 
-		final TestingDataGenerator g = new TestingDataGenerator();
-		System.out.println(g.generateVector().toString());
-		System.out.println(g.generateVector().toString());
-		System.out.println(g.generateVector().toString());
-		System.out.println(g.generateVector().toString());
-		System.out.println(g.generateVector().toString());
-
+		/*
+		 * The following section of code only needs to be run once, and will
+		 * generate new data to use.
+		 */
+		if ("a".equals("b")) {
+			final LinearData l = new TestingDataGenerator().getData();
+			final DataConverter d = new DataConverter();
+			d.setData(l);
+			d.writeData("dat/PolynomialDataComplete.csv");
+		}
 		final Main m = new Main(); // Execute algorithm
 	}
 }

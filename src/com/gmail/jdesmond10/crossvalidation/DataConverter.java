@@ -97,4 +97,8 @@ public class DataConverter {
 			return null;
 		}
 	}
+
+	public void setData(final LinearData da) {
+		this.data = Optional.of(da);
+	}
 }
