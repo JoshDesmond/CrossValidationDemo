@@ -16,10 +16,13 @@ public final class PolynomialFunction implements Function<Float, Float> {
 
 	/** The intercept. */
 	public final float betaOne;
+	/** The first degree term */
 	public final float betaTwo;
+	/** The squared term */
 	public final float betaThree;
 	public final float betaFour;
 	public final float betaFive;
+	/** Higher is more complex */
 	public final float complexity;
 
 	public PolynomialFunction(final float b1, final float b2, final float b3,
