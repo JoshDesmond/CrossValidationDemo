@@ -1,7 +1,5 @@
 package com.gmail.jdesmond10.crossvalidation;
 
-import java.util.function.Function;
-
 import org.ejml.simple.SimpleMatrix;
 
 public class Main {
@@ -16,6 +14,7 @@ public class Main {
 	private RegressionAlgorithm regressionAlgo;
 	/** the number of folds in K-Folds Cross Validation */
 	private final int kFolds = 10;
+	private DualFunction predictor;
 
 	public Main() {
 
@@ -50,7 +49,7 @@ public class Main {
 		linData.shuffle(); // Shuffles data
 
 		seperateTestData();
-		generatePredictor();
+		this.predictor = generatePredictor();
 		evaluatePredictor();
 	}
 
@@ -60,13 +59,26 @@ public class Main {
 	 */
 	private void evaluatePredictor() {
 		// TODO evaluatePredictor
+		// Goal here is to sum the square of residuals.
 
+		float sum = 0;
+		float resid;
+		float a;
+		float b;
+		for (int i = testLinData.getNumDataPoints(); i > 0; i--) {
+			a = testLinData.getXPoint(0, i);
+			b = testLinData.getXPoint(1,i);
+			resid = predictor.apply(a, b);
+			sum += resid*resid;
+		}
+
+		System.out.println("Sum of residuals squared:" + sum);
 	}
 
 	/**
 	 * Generates a predictor function using the established RegressionAlgorithm
 	 */
-	private Function<Float, Float> generatePredictor() {
+	private DualFunction generatePredictor() {
 		// TODO generatePredictor
 		final PolynomialFunction algo = (PolynomialFunction) regressionAlgo
 				.generatePredictor(0, linData);
@@ -111,7 +123,6 @@ public class Main {
 	private String chooseData() {
 		// For now, dataC will just be set to use the given test data.
 
-
 		final ClassLoader l = ClassLoader.getSystemClassLoader();
 		final String test = l.getResource("dat/PolynomialData.csv").getPath();
 		return test;
@@ -132,8 +143,10 @@ public class Main {
 			final LinearData l = new TestingDataGenerator().getData();
 			final DataConverter d = new DataConverter();
 			d.setData(l);
-			d.writeData("dat/PolynomialDataComplete.csv");
+			d.writeData("/srcdat/PolynomialDataComplete.csv");
 		}
+
+		@SuppressWarnings("unused")
 		final Main m = new Main(); // Execute algorithm
 	}
 }

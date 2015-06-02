@@ -101,6 +101,20 @@ public class LinearData {
 		return X.numCols();
 	}
 
+	/**
+	 * 
+	 * @param p which of the p inputs
+	 * @param n which of the n vectors
+	 * @return value of Xpn
+	 */
+	public float getXPoint(final int p, final int n) {
+		return X.getIndex(n, p);
+	}
+
+	public float getYPoint(final int n) {
+		return Y.getIndex(n, 0);
+	}
+
 	public SimpleMatrix getX() {
 		return X;
 	}

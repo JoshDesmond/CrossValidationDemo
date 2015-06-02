@@ -1,6 +1,5 @@
 package com.gmail.jdesmond10.crossvalidation;
 
-import java.util.function.Function;
 
 /**
  * A function of the type Y=B1 + B2x + B3x^2 + B4x^3 + B5x^4
@@ -12,7 +11,7 @@ import java.util.function.Function;
  * @author Josh Desmond
  *
  */
-public final class PolynomialFunction implements Function<Float, Float> {
+public final class PolynomialFunction implements DualFunction {
 
 	/** The intercept. */
 	public final float betaOne;
@@ -36,7 +35,7 @@ public final class PolynomialFunction implements Function<Float, Float> {
 	}
 
 	@Override
-	public Float apply(final Float t) {
+	public float apply(final float t, final float empty) {
 		float toRet = betaOne;
 		toRet += betaTwo * t;
 		toRet += betaThree * t * t;
