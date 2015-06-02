@@ -10,7 +10,8 @@ import java.util.function.Function;
 public interface RegressionAlgorithm {
 
 	/**
-	 * Runs some time of
+	 * Runs some type of regression, and returns any object that represents a
+	 * function. A base case example will be a polynomial expression.
 	 * 
 	 * @param Complexity
 	 *            a number between TODO Determine how to rep. complexity
