@@ -1,5 +1,7 @@
 package com.gmail.jdesmond10.crossvalidation;
 
+import org.ejml.simple.SimpleMatrix;
+
 public class Main {
 
 	public static final String VERSION = "0.0";
@@ -7,6 +9,7 @@ public class Main {
 	private final DataConverter dataC;
 	/** A set of X points, in n dimensions, arranged as column matrices */
 	private LinearData linData;
+	private LinearData testLinData;
 
 	private RegressionAlgorithm regressionAlgo;
 	/** the number of folds in K-Folds Cross Validation */
@@ -49,7 +52,6 @@ public class Main {
 		seperateTestData();
 		generatePredictor();
 		evaluatePredictor();
-
 	}
 
 	/**
@@ -70,11 +72,22 @@ public class Main {
 	}
 
 	/**
-	 *
+	 * Cuts the size of linData, taking about 20% of it and storing it in (by
+	 * means of replacing) testLinData
 	 */
 	private void seperateTestData() {
-		// TODO seperateTestData
+		// Lets separate about 20% of our points
 
+		SimpleMatrix dataM = linData.convertToSingleMatrix();
+
+		final int n = dataM.numRows() / 5;
+
+		testLinData = new LinearData(dataM.extractMatrix(0, n, 0,
+				dataM.numCols() - 1)); // Save to test data
+		dataM = dataM.extractMatrix(n, dataM.numRows() - 1, 0,
+				dataM.numCols() - 1); // Save to dataM
+
+		linData = new LinearData(dataM); // Convert Matrix to field
 	}
 
 	/**
