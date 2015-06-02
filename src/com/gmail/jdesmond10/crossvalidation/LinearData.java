@@ -42,6 +42,7 @@ public class LinearData {
 			System.err.println("Need more than one row");
 		} else if (nr < 2) {
 			System.err.println("need more than 2 data points.");
+			System.err.println(Thread.currentThread().getStackTrace()[2]);
 		}
 
 		// we want to split this into an N by p matrix called X and an N by

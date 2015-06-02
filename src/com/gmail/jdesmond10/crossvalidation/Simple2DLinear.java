@@ -15,13 +15,14 @@ public class Simple2DLinear implements RegressionAlgorithm {
 		final SimpleMatrix y = data.getY();
 
 		// A is given by (X^T * X)^-1 * (X^T * Y) where X^T is X transpose.
-		SimpleMatrix A = new SimpleMatrix(2, 1);
-
+		SimpleMatrix A;
 		// y.mult(x.transpose());
 
 		x.transpose().mult(x).invert();
 
 		A = (((x.transpose()).mult(x)).invert()).mult(x.transpose().mult(y));
+
+		System.out.println(A.toString());
 
 		return new PolynomialFunction((float) A.get(0),(float) A.get(1),0f,0f,0f);
 

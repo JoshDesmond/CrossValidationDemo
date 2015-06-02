@@ -1,5 +1,7 @@
 package com.gmail.jdesmond10.crossvalidation;
 
+import java.util.function.Function;
+
 import org.ejml.simple.SimpleMatrix;
 
 public class Main {
@@ -16,8 +18,6 @@ public class Main {
 	private final int kFolds = 10;
 
 	public Main() {
-		System.out.println(String.format("Running CrossValidation version %s",
-				VERSION));
 
 		dataC = new DataConverter();
 
@@ -66,9 +66,14 @@ public class Main {
 	/**
 	 * Generates a predictor function using the established RegressionAlgorithm
 	 */
-	private void generatePredictor() {
+	private Function<Float, Float> generatePredictor() {
 		// TODO generatePredictor
+		final PolynomialFunction algo = (PolynomialFunction) regressionAlgo
+				.generatePredictor(0, linData);
 
+		System.out.println("finished, algorithm produced is: "
+				+ algo.toString());
+		return algo;
 	}
 
 	/**
@@ -81,17 +86,18 @@ public class Main {
 		SimpleMatrix dataM = linData.convertToSingleMatrix();
 
 		final int n = dataM.numRows() / 5;
+		System.out.println("n = " +n);
 
 		testLinData = new LinearData(dataM.extractMatrix(0, n, 0,
-				dataM.numCols() - 1)); // Save to test data
+				dataM.numCols())); // Save to test data
 		dataM = dataM.extractMatrix(n, dataM.numRows() - 1, 0,
-				dataM.numCols() - 1); // Save to dataM
+				dataM.numCols()); // Save to dataM
 
 		linData = new LinearData(dataM); // Convert Matrix to field
 	}
 
 	/**
-	 * Sets the value of the private fields regressionAlgo and crossValAlgo.
+	 * Sets the value of the private field regressionAlgo
 	 */
 	private void chooseAlgorithm() {
 		regressionAlgo = new Simple2DLinear();
@@ -104,7 +110,7 @@ public class Main {
 	private String chooseData() {
 		// For now, dataC will just be set to use the given test data.
 		final ClassLoader l = ClassLoader.getSystemClassLoader();
-		final String test = l.getResource("dat/test.csv").getPath();
+		final String test = l.getResource("dat/testwrite.csv").getPath();
 		return test;
 	}
 
@@ -112,14 +118,16 @@ public class Main {
 	 * Runs a hello message on the console, and runs Main.
 	 */
 	public static void main(final String[] args) {
+		System.out.println(String.format("Running CrossValidation version %s",
+				VERSION));
+
+		final TestingDataGenerator g = new TestingDataGenerator();
+		System.out.println(g.generateVector().toString());
+		System.out.println(g.generateVector().toString());
+		System.out.println(g.generateVector().toString());
+		System.out.println(g.generateVector().toString());
+		System.out.println(g.generateVector().toString());
 
 		final Main m = new Main(); // Execute algorithm
-
-		// Ignore this stuff.
-		final DataConverter c = new DataConverter();
-		final ClassLoader l = ClassLoader.getSystemClassLoader();
-		final String test = l.getResource("dat/test.csv").getPath();
-		c.read(test);
-
 	}
 }
